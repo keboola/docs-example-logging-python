@@ -1,0 +1,13 @@
+server:
+  image: "quay.io/keboola/docs-example-logging-mock-server:master"
+  ports:
+    - 12202:12202/tcp  
+  environment:
+    SERVER_TYPE: tcp
+client:
+  image: "quay.io/keboola/docs-example-logging-python:master"
+  links:
+    - server:log-server
+  environment:
+    KBC_LOGGER_ADDR: log-server
+    KBC_LOGGER_PORT: 12202
