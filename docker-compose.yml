@@ -11,3 +11,5 @@ client:
   environment:
     KBC_LOGGER_ADDR: log-server
     KBC_LOGGER_PORT: 12202
+  volumes:
+    - ./:/src/
