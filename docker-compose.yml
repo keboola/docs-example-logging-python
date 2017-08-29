@@ -1,15 +1,32 @@
-server:
-  image: "quay.io/keboola/docs-example-logging-mock-server:master"
-  ports:
-    - 12202:12202/tcp  
-  environment:
-    SERVER_TYPE: tcp
-client:
-  image: "quay.io/keboola/docs-example-logging-python:master"
-  links:
-    - server:log-server
-  environment:
-    KBC_LOGGER_ADDR: log-server
-    KBC_LOGGER_PORT: 12202
-  volumes:
-    - ./:/src/
+version: '2'
+
+services:
+  tcp-server:
+    image: quay.io/keboola/docs-example-logging-mock-server:master
+    ports:
+      - 12202:12202/tcp  
+    environment:
+      SERVER_TYPE: tcp
+  tcp-client:
+    image: quay.io/keboola/docs-example-logging-python:master
+    links:
+      - server:log-server
+    environment:
+      KBC_LOGGER_ADDR: log-server
+      KBC_LOGGER_PORT: 12202
+  udp-server:
+    image: quay.io/keboola/docs-example-logging-mock-server:master
+    ports:
+      - 12201:12201/udp
+    environment:
+      SERVER_TYPE: udp
+  udp-client:
+    image: quay.io/keboola/docs-example-logging-python:master
+    links:
+      - server:log-server
+    entrypoint:
+      - python
+      - /src/main-udp.py
+    environment:
+      KBC_LOGGER_ADDR: log-server
+      KBC_LOGGER_PORT: 12201

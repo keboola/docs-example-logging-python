@@ -1,8 +1,8 @@
 import logging
 import os
 import pygelf
-import graypy
 import logging_gelf.handlers
+import logging_gelf.formatters
 import djehouty.libgelf.handlers
 
 logging.basicConfig(level=logging.INFO)
@@ -23,15 +23,6 @@ logging.critical('A sample emergency message (pygelf)')
 
 logger.removeHandler(pygelf_handler)
 
-# graypy
-graypy_handler = graypy.GELFHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')), extra_fields=fields)
-logger.addHandler(graypy_handler)
-logging.info('A sample info message (graypy)')
-logging.warning('A sample warn message (graypy)')
-logging.critical('A sample emergency message (graypy)')
-
-logger.removeHandler(graypy_handler)
-
 # djehouty
 djehouty_handler = djehouty.libgelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=os.getenv('KBC_LOGGER_PORT'), static_fields=fields)
 logger.addHandler(djehouty_handler)
@@ -43,6 +34,7 @@ logger.removeHandler(djehouty_handler)
 
 # logging_gelf
 logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')))
+logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
 logger.addHandler(logging_gelf_handler)
 logging.info('A sample info message (logging_gelf)')
 logging.warning('A sample warn message (logging_gelf)')
