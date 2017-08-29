@@ -13,7 +13,7 @@ logger.removeHandler(logger.handlers[0])
 fields = {"_some": {"structured": "data"}}
 
 # pygelf
-pygelf_handler = pygelf.GelfUdpHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=os.getenv('KBC_LOGGER_PORT'), debug=False, **fields)
+pygelf_handler = pygelf.GelfUdpHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')), chunkSize=1350, **fields)
 logger.addHandler(pygelf_handler)
 logging.info('A sample info message (pygelf)')
 logging.warning('A sample warn message (pygelf)')
@@ -28,4 +28,4 @@ logging.info('A sample info message (graypy)')
 logging.warning('A sample warn message (graypy)')
 logging.critical('A sample emergency message (graypy)')
 
-logger.removeHandler(logging_gelf_handler)
+logger.removeHandler(graypy_handler)

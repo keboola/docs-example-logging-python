@@ -41,3 +41,13 @@ logging.warning('A sample warn message (logging_gelf)')
 logging.critical('A sample emergency message (logging_gelf)')
 
 logger.removeHandler(logging_gelf_handler)
+
+# incorrect logging_gelf
+logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')))
+#logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
+logger.addHandler(logging_gelf_handler)
+logging.info('A sample info message (invalid)')
+logging.warning('A sample warn message (invalid)')
+logging.critical('A sample emergency message (invalid)')
+
+logger.removeHandler(logging_gelf_handler)
