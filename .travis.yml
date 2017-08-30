@@ -1,0 +1,15 @@
+sudo: required
+language: bash
+services:
+  - docker
+script: 
+  - docker build --tag docs-example-logging-python .
+after_success:
+  - docker images
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ./deploy.sh
+  on:
+    tags: true
