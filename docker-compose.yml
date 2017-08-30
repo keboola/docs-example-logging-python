@@ -20,6 +20,7 @@ services:
       - 12201:12201/udp
     environment:
       SERVER_TYPE: udp
+      PORT: 12201
   udp-client:
     image: quay.io/keboola/docs-example-logging-python:master
     links:

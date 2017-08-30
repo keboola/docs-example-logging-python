@@ -4,7 +4,9 @@ import pygelf
 import logging_gelf.handlers
 import logging_gelf.formatters
 import djehouty.libgelf.handlers
+import time
 
+time.sleep(1)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
