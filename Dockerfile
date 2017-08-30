@@ -1,8 +1,12 @@
-FROM python:3.5
+FROM python:3.6
+
+RUN	pip3 install --upgrade --no-cache-dir --ignore-installed \
+	pygelf \
+	logging-gelf \
+	graypy \
+	djehouty
 
 COPY . /src/
 WORKDIR /src/
 
-RUN pip install pygelf
-
-ENTRYPOINT python main.py
+ENTRYPOINT python /src/main.py
