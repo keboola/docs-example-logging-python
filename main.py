@@ -1,6 +1,6 @@
 import logging
 import os
-import pygelf
+#import pygelf
 import logging_gelf.handlers
 import logging_gelf.formatters
 import djehouty.libgelf.handlers
@@ -17,13 +17,14 @@ logger.removeHandler(logger.handlers[0])
 fields = {"_some": {"structured": "data"}}
 
 # pygelf
-pygelf_handler = pygelf.GelfTcpHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=os.getenv('KBC_LOGGER_PORT'), debug=False, **fields)
-logger.addHandler(pygelf_handler)
-logging.info('A sample info message (pygelf)')
-logging.warning('A sample warn message (pygelf)')
-logging.critical('A sample emergency message (pygelf)')
-
-logger.removeHandler(pygelf_handler)
+# does not work until https://github.com/keeprocking/pygelf/commit/348de66c1d06f40c5478af1635c1fd0e68edfa56 is resolved
+#pygelf_handler = pygelf.GelfTcpHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=os.getenv('KBC_LOGGER_PORT'), debug=False, **fields)
+#logger.addHandler(pygelf_handler)
+#logging.info('A sample info message (pygelf)')
+#logging.warning('A sample warn message (pygelf)')
+#logging.critical('A sample emergency message (pygelf)')
+#
+#logger.removeHandler(pygelf_handler)
 
 # djehouty
 djehouty_handler = djehouty.libgelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=os.getenv('KBC_LOGGER_PORT'), static_fields=fields)
