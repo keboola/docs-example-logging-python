@@ -35,6 +35,16 @@ logging.critical('A sample emergency message (djehouty)')
 
 logger.removeHandler(djehouty_handler)
 
+# incorrect logging_gelf
+logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')))
+#logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
+logger.addHandler(logging_gelf_handler)
+logging.info('A sample info message (invalid)')
+logging.warning('A sample warn message (invalid)')
+logging.critical('A sample emergency message (invalid)')
+
+logger.removeHandler(logging_gelf_handler)
+
 # logging_gelf
 logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')))
 logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
@@ -45,12 +55,13 @@ logging.critical('A sample emergency message (logging_gelf)')
 
 logger.removeHandler(logging_gelf_handler)
 
-# incorrect logging_gelf
+# Note the mock-server cannot properly handle invalid dangling (not terminated by null) messages because it does not handle client disconnect
+# incorrect logging_gelf2
 logging_gelf_handler = logging_gelf.handlers.GELFTCPSocketHandler(host=os.getenv('KBC_LOGGER_ADDR'), port=int(os.getenv('KBC_LOGGER_PORT')))
 #logging_gelf_handler.setFormatter(logging_gelf.formatters.GELFFormatter(null_character=True))
 logger.addHandler(logging_gelf_handler)
-logging.info('A sample info message (invalid)')
-logging.warning('A sample warn message (invalid)')
-logging.critical('A sample emergency message (invalid)')
-
+logging.info('A sample info message (invalid2)')
+logging.warning('A sample warn message (invalid2)')
+logging.critical('A sample emergency message (invalid2)')
+logging.critical('\x00')
 logger.removeHandler(logging_gelf_handler)
