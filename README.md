@@ -5,3 +5,7 @@ To run the example do:
 ```
 docker-compose up --build
 ```
+
+## License
+
+MIT licensed, see [LICENSE](./LICENSE) file.
